@@ -58,7 +58,11 @@ struct HoverScene {
 
     func addAnimation(node: SCNNode) {
         let rotateOne = SCNAction.rotateBy(x: 0, y: CGFloat(Float.pi), z: 0, duration: 5.0)
-        let repeatForever = SCNAction.repeatForever(rotateOne)
+        let hoverUp = SCNAction.moveBy(x: 0, y: 0.2, z: 0, duration: 2.5)
+        let hoverDown = SCNAction.moveBy(x: 0, y: -0.2, z: 0, duration: 2.5)
+        let hoverSequence = SCNAction.sequence([hoverUp, hoverDown])
+        let rotateAndHover = SCNAction.group([rotateOne, hoverSequence])
+        let repeatForever = SCNAction.repeatForever(rotateAndHover)
         node.runAction(repeatForever)
     }
 }
