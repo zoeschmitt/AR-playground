@@ -16,6 +16,7 @@
 		DDF024E8283C6C2A00C4F49D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DDF024E7283C6C2A00C4F49D /* README.md */; };
 		DDF024EA283D626400C4F49D /* HoverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF024E9283D626400C4F49D /* HoverScene.swift */; };
 		DDF024ED283D75F000C4F49D /* Node+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF024EC283D75F000C4F49D /* Node+Extensions.swift */; };
+		DDF024EF283DC57100C4F49D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DDF024EE283DC57100C4F49D /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		DDF024E7283C6C2A00C4F49D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DDF024E9283D626400C4F49D /* HoverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverScene.swift; sourceTree = "<group>"; };
 		DDF024EC283D75F000C4F49D /* Node+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Node+Extensions.swift"; sourceTree = "<group>"; };
+		DDF024EE283DC57100C4F49D /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +47,7 @@
 		DDF024C4283C6A4400C4F49D = {
 			isa = PBXGroup;
 			children = (
+				DDF024EE283DC57100C4F49D /* .gitignore */,
 				DDF024E7283C6C2A00C4F49D /* README.md */,
 				DDF024CF283C6A4400C4F49D /* AR-Playground */,
 				DDF024CE283C6A4400C4F49D /* Products */,
@@ -160,6 +163,7 @@
 				DDF024DD283C6A4500C4F49D /* LaunchScreen.storyboard in Resources */,
 				DDF024E5283C6BAF00C4F49D /* doughnut.dae in Resources */,
 				DDF024DA283C6A4500C4F49D /* Assets.xcassets in Resources */,
+				DDF024EF283DC57100C4F49D /* .gitignore in Resources */,
 				DDF024D8283C6A4400C4F49D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
