@@ -12,6 +12,8 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
+    var sceneController = HoverScene()
+    var didInitializeScene: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,10 +25,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
-        
-        // Set the scene to the view
-        sceneView.scene = scene
+        if let scene = sceneController.scene {
+            sceneView.scene = scene
+        }
+
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.didTapScreen))
+        self.view.addGestureRecognizer(tapRecognizer)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +60,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         return node
     }
 */
+
+    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        if !didInitializeScene {
+            if sceneView.session.currentFrame?.camera != nil {
+                didInitializeScene = true
+            }
+        }
+    }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
@@ -70,5 +82,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
         
+    }
+
+    @objc func didTapScreen(recognizer: UITapGestureRecognizer) {
+        if didInitializeScene {
+            if let camera = sceneView.session.currentFrame?.camera {
+                var translation = matrix_identity_float4x4
+                translation.columns.3.z = -1.0
+                let transform = camera.transform * translation
+                let position = SCNVector3(transform.columns.3.x, transform.columns.3.y, transform.columns.3.z)
+                sceneController.addDoughnut(position: position)
+            }
+        }
     }
 }

@@ -8,25 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		DDF024D1283C6A4400C4F49D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF024D0283C6A4400C4F49D /* AppDelegate.swift */; };
-		DDF024D3283C6A4400C4F49D /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = DDF024D2283C6A4400C4F49D /* art.scnassets */; };
 		DDF024D5283C6A4400C4F49D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF024D4283C6A4400C4F49D /* ViewController.swift */; };
 		DDF024D8283C6A4400C4F49D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDF024D6283C6A4400C4F49D /* Main.storyboard */; };
 		DDF024DA283C6A4500C4F49D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDF024D9283C6A4500C4F49D /* Assets.xcassets */; };
 		DDF024DD283C6A4500C4F49D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDF024DB283C6A4500C4F49D /* LaunchScreen.storyboard */; };
 		DDF024E5283C6BAF00C4F49D /* doughnut.dae in Resources */ = {isa = PBXBuildFile; fileRef = DDF024E4283C6BAF00C4F49D /* doughnut.dae */; };
 		DDF024E8283C6C2A00C4F49D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DDF024E7283C6C2A00C4F49D /* README.md */; };
+		DDF024EA283D626400C4F49D /* HoverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF024E9283D626400C4F49D /* HoverScene.swift */; };
+		DDF024ED283D75F000C4F49D /* Node+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF024EC283D75F000C4F49D /* Node+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		DDF024CD283C6A4400C4F49D /* AR-Playground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-Playground.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDF024D0283C6A4400C4F49D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DDF024D2283C6A4400C4F49D /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		DDF024D4283C6A4400C4F49D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DDF024D7283C6A4400C4F49D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DDF024D9283C6A4500C4F49D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DDF024DC283C6A4500C4F49D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DDF024E4283C6BAF00C4F49D /* doughnut.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = doughnut.dae; sourceTree = "<group>"; };
 		DDF024E7283C6C2A00C4F49D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		DDF024E9283D626400C4F49D /* HoverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverScene.swift; sourceTree = "<group>"; };
+		DDF024EC283D75F000C4F49D /* Node+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Node+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,10 +62,10 @@
 		DDF024CF283C6A4400C4F49D /* AR-Playground */ = {
 			isa = PBXGroup;
 			children = (
+				DDF024EB283D75E400C4F49D /* Utils */,
 				DDF024E6283C6C0300C4F49D /* Scenes */,
 				DDF024E3283C6B2800C4F49D /* Models */,
 				DDF024D0283C6A4400C4F49D /* AppDelegate.swift */,
-				DDF024D2283C6A4400C4F49D /* art.scnassets */,
 				DDF024D4283C6A4400C4F49D /* ViewController.swift */,
 				DDF024D6283C6A4400C4F49D /* Main.storyboard */,
 				DDF024D9283C6A4500C4F49D /* Assets.xcassets */,
@@ -83,8 +85,17 @@
 		DDF024E6283C6C0300C4F49D /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				DDF024E9283D626400C4F49D /* HoverScene.swift */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		DDF024EB283D75E400C4F49D /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				DDF024EC283D75F000C4F49D /* Node+Extensions.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,7 +157,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDF024E8283C6C2A00C4F49D /* README.md in Resources */,
-				DDF024D3283C6A4400C4F49D /* art.scnassets in Resources */,
 				DDF024DD283C6A4500C4F49D /* LaunchScreen.storyboard in Resources */,
 				DDF024E5283C6BAF00C4F49D /* doughnut.dae in Resources */,
 				DDF024DA283C6A4500C4F49D /* Assets.xcassets in Resources */,
@@ -161,6 +171,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDF024EA283D626400C4F49D /* HoverScene.swift in Sources */,
+				DDF024ED283D75F000C4F49D /* Node+Extensions.swift in Sources */,
 				DDF024D5283C6A4400C4F49D /* ViewController.swift in Sources */,
 				DDF024D1283C6A4400C4F49D /* AppDelegate.swift in Sources */,
 			);
@@ -319,6 +331,7 @@
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -349,6 +362,7 @@
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
