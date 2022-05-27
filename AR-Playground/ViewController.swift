@@ -52,20 +52,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     // MARK: - ARSCNViewDelegate
     
-/*
-    // Override to create and configure nodes for anchors added to the view's session.
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
+    /*
+     // Override to create and configure nodes for anchors added to the view's session.
+     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
+     let node = SCNNode()
      
-        return node
-    }
-*/
+     return node
+     }
+     */
 
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        if !didInitializeScene {
-            if sceneView.session.currentFrame?.camera != nil {
-                didInitializeScene = true
-            }
+        if let camera = sceneView.session.currentFrame?.camera {
+            didInitializeScene = true
+
+            let transform = camera.transform
+            let position = SCNVector3(transform.columns.3.x, transform.columns.3.y, transform.columns.3.z)
+            sceneController.makeUpdateCameraPos(towards: position)
         }
     }
     
@@ -84,9 +86,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
     }
 
+    /// Grab the first node  (if there are hits), then use our topmost() extension to grab the topmost parent, and check if its a doughnut.
+    /// If it is, then we add our animation to it. If we didn’t get any hits from our test, then we do as before, adding a new doughnut in
+    /// front of the camera.
     @objc func didTapScreen(recognizer: UITapGestureRecognizer) {
-        if didInitializeScene {
-            if let camera = sceneView.session.currentFrame?.camera {
+        if didInitializeScene, let camera = sceneView.session.currentFrame?.camera {
+            let tapLocation = recognizer.location(in: sceneView)
+            let hitTestResults = sceneView.hitTest(tapLocation)
+            if let node = hitTestResults.first?.node, let scene = sceneController.scene, let doughnut = node.topmost(until: scene.rootNode) as? Doughnut {
+                doughnut.animate()
+            } else {
                 var translation = matrix_identity_float4x4
                 translation.columns.3.z = -1.0
                 let transform = camera.transform * translation

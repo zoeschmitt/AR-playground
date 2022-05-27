@@ -44,25 +44,34 @@ struct HoverScene {
     func addDoughnut(position: SCNVector3) {
         guard let scene = self.scene else { return }
 
-        let containerNode = SCNNode()
+        let doughnut = Doughnut()
+        doughnut.position = position
 
-        let nodesInFile = SCNNode.allNodes(from: "doughnut.dae")
-        print(nodesInFile)
-        nodesInFile.forEach { (node) in
-            containerNode.addChildNode(node)
+        let prevScale = doughnut.scale
+        doughnut.scale = SCNVector3(1.0, 1.0, 1.0)
+        let scaleAction = SCNAction.scale(to: CGFloat(prevScale.x), duration: 1.5)
+        scaleAction.timingMode = .linear
+
+        scaleAction.timingFunction = { (p: Float) in
+            return self.easeOutElastic(p)
         }
-        containerNode.position = position
-        scene.rootNode.addChildNode(containerNode)
-        addAnimation(node: containerNode)
+
+        scene.rootNode.addChildNode(doughnut)
+        doughnut.runAction(scaleAction, forKey: "scaleAction")
     }
 
-    func addAnimation(node: SCNNode) {
-        let rotateOne = SCNAction.rotateBy(x: 0, y: CGFloat(Float.pi), z: 0, duration: 5.0)
-        let hoverUp = SCNAction.moveBy(x: 0, y: 0.2, z: 0, duration: 2.5)
-        let hoverDown = SCNAction.moveBy(x: 0, y: -0.2, z: 0, duration: 2.5)
-        let hoverSequence = SCNAction.sequence([hoverUp, hoverDown])
-        let rotateAndHover = SCNAction.group([rotateOne, hoverSequence])
-        let repeatForever = SCNAction.repeatForever(rotateAndHover)
-        node.runAction(repeatForever)
+    func easeOutElastic(_ t: Float) -> Float {
+        let p: Float = 0.3
+        let result = pow(2.0, -10.0 * t) * sin((t - p / 4.0) * (2.0 * Float.pi) / p) + 1.0
+        return result
+    }
+
+    func makeUpdateCameraPos(towards: SCNVector3) {
+        guard let scene = self.scene else { return }
+        scene.rootNode.enumerateChildNodes({ (node, _) in
+            if let doughnut = node.topmost(until: scene.rootNode) as? Doughnut {
+                doughnut.move(targetPos: towards)
+            }
+        })
     }
 }

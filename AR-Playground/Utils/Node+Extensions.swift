@@ -21,10 +21,16 @@ extension SCNNode {
             objScene.rootNode.enumerateChildNodes({ (node, _) in
                 nodesInFile.append(node)
             })
-        } catch {
-
-        }
-
+        } catch { }
         return nodesInFile
+    }
+
+    /// checks to see if each node returned in the hitTest is a Doughnut. To do that we need to grab the topmost parent node for each node we want to check.
+    func topmost(parent: SCNNode? = nil, until: SCNNode) -> SCNNode {
+        if let pNode = self.parent {
+            return pNode == until ? self : pNode.topmost(parent: pNode, until: until)
+        } else {
+            return self
+        }
     }
 }

@@ -17,6 +17,9 @@
 		DDF024EA283D626400C4F49D /* HoverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF024E9283D626400C4F49D /* HoverScene.swift */; };
 		DDF024ED283D75F000C4F49D /* Node+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF024EC283D75F000C4F49D /* Node+Extensions.swift */; };
 		DDF024EF283DC57100C4F49D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DDF024EE283DC57100C4F49D /* .gitignore */; };
+		DDF024F2283DCD2900C4F49D /* Doughnut.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF024F1283DCD2900C4F49D /* Doughnut.swift */; };
+		DDF024F42840265300C4F49D /* UtilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF024F32840265300C4F49D /* UtilityExtensions.swift */; };
+		DDF024F62840282400C4F49D /* SCNVector3+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF024F52840282400C4F49D /* SCNVector3+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +34,9 @@
 		DDF024E9283D626400C4F49D /* HoverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverScene.swift; sourceTree = "<group>"; };
 		DDF024EC283D75F000C4F49D /* Node+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Node+Extensions.swift"; sourceTree = "<group>"; };
 		DDF024EE283DC57100C4F49D /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		DDF024F1283DCD2900C4F49D /* Doughnut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Doughnut.swift; sourceTree = "<group>"; };
+		DDF024F32840265300C4F49D /* UtilityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityExtensions.swift; sourceTree = "<group>"; };
+		DDF024F52840282400C4F49D /* SCNVector3+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +71,7 @@
 		DDF024CF283C6A4400C4F49D /* AR-Playground */ = {
 			isa = PBXGroup;
 			children = (
+				DDF024F0283DCD1A00C4F49D /* Objects */,
 				DDF024EB283D75E400C4F49D /* Utils */,
 				DDF024E6283C6C0300C4F49D /* Scenes */,
 				DDF024E3283C6B2800C4F49D /* Models */,
@@ -97,8 +104,18 @@
 			isa = PBXGroup;
 			children = (
 				DDF024EC283D75F000C4F49D /* Node+Extensions.swift */,
+				DDF024F32840265300C4F49D /* UtilityExtensions.swift */,
+				DDF024F52840282400C4F49D /* SCNVector3+Extensions.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		DDF024F0283DCD1A00C4F49D /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				DDF024F1283DCD2900C4F49D /* Doughnut.swift */,
+			);
+			path = Objects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,9 +193,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDF024EA283D626400C4F49D /* HoverScene.swift in Sources */,
+				DDF024F2283DCD2900C4F49D /* Doughnut.swift in Sources */,
+				DDF024F42840265300C4F49D /* UtilityExtensions.swift in Sources */,
 				DDF024ED283D75F000C4F49D /* Node+Extensions.swift in Sources */,
 				DDF024D5283C6A4400C4F49D /* ViewController.swift in Sources */,
 				DDF024D1283C6A4400C4F49D /* AppDelegate.swift in Sources */,
+				DDF024F62840282400C4F49D /* SCNVector3+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
