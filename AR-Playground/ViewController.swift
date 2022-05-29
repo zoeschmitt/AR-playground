@@ -128,7 +128,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                             hitResult.worldCoordinates.y,
                             hitResult.worldCoordinates.z
                         )
-                        sceneController.addText(string: "Hello", parent: planeParent)
+                        sceneController.addText(string: "Hello", parent: planeParent, position: textPos)
                     }
                 }
                 else {

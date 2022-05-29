@@ -95,9 +95,10 @@ struct HoverScene {
         return textNode
     }
 
-    func addText(string: String, parent: SCNNode) {
+    func addText(string: String, parent: SCNNode, position: SCNVector3 = SCNVector3Zero) {
+        guard let scene = self.scene else { return }
         let textNode = self.createTextNode(string: string)
-        textNode.position = SCNVector3Zero
+        textNode.position = scene.rootNode.convertPosition(position, to: parent)
         parent.addChildNode(textNode)
     }
 
