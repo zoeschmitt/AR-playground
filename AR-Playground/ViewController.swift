@@ -14,6 +14,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet var sceneView: ARSCNView!
     var sceneController = HoverScene()
     var didInitializeScene: Bool = false
+    /// maps anchors to planes. This gives us an easy way to lookup and modify the corresponding plane.
+    var planes = [ARPlaneAnchor: Plane]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,15 +57,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
 
     // MARK: - ARSCNViewDelegate
-    
-    /*
-     // Override to create and configure nodes for anchors added to the view's session.
-     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-     let node = SCNNode()
-     
-     return node
-     }
-     */
 
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         if let camera = sceneView.session.currentFrame?.camera {
@@ -83,11 +76,26 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
 
+    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+        DispatchQueue.main.async {
+            if let planeAnchor = anchor as? ARPlaneAnchor {
+                self.updatePlane(anchor: planeAnchor)
+            }
+        }
+    }
+
     /// create our plane, and then add it as a child node to the node that ARKit created.
     func addPlane(node: SCNNode, anchor: ARPlaneAnchor) {
         let plane = Plane(anchor)
+        planes[anchor] = plane
         node.addChildNode(plane)
         print("added plane")
+    }
+
+    func updatePlane(anchor: ARPlaneAnchor) {
+        if let plane = planes[anchor] {
+            plane.update(anchor)
+        }
     }
 
     /// Grab the first node  (if there are hits), then use our topmost() extension to grab the topmost parent, and check if its a doughnut.
