@@ -23,6 +23,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
+        // visibly shows feature points and the world origin.
+        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
         
         // Create a new scene
         if let scene = sceneController.scene {
@@ -38,6 +40,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
+        // tell ARKit that we want to track planes. 
+        configuration.planeDetection = .horizontal
 
         // Run the view's session
         sceneView.session.run(configuration)
@@ -70,20 +74,20 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             sceneController.makeUpdateCameraPos(towards: position)
         }
     }
-    
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
-        
+
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        DispatchQueue.main.async {
+            if let planeAnchor = anchor as? ARPlaneAnchor {
+                self.addPlane(node: node, anchor: planeAnchor)
+            }
+        }
     }
-    
-    func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        
-    }
-    
-    func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
+
+    /// create our plane, and then add it as a child node to the node that ARKit created.
+    func addPlane(node: SCNNode, anchor: ARPlaneAnchor) {
+        let plane = Plane(anchor)
+        node.addChildNode(plane)
+        print("added plane")
     }
 
     /// Grab the first node  (if there are hits), then use our topmost() extension to grab the topmost parent, and check if its a doughnut.
@@ -103,5 +107,20 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 sceneController.addDoughnut(position: position)
             }
         }
+    }
+    
+    func session(_ session: ARSession, didFailWithError error: Error) {
+        // Present an error message to the user
+        
+    }
+    
+    func sessionWasInterrupted(_ session: ARSession) {
+        // Inform the user that the session has been interrupted, for example, by presenting an overlay
+        
+    }
+    
+    func sessionInterruptionEnded(_ session: ARSession) {
+        // Reset tracking and/or remove existing anchors if consistent tracking is required
+        
     }
 }

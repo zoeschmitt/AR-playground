@@ -20,6 +20,8 @@
 		DDF024F2283DCD2900C4F49D /* Doughnut.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF024F1283DCD2900C4F49D /* Doughnut.swift */; };
 		DDF024F42840265300C4F49D /* UtilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF024F32840265300C4F49D /* UtilityExtensions.swift */; };
 		DDF024F62840282400C4F49D /* SCNVector3+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF024F52840282400C4F49D /* SCNVector3+Extensions.swift */; };
+		DDF024F82843E82F00C4F49D /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF024F72843E82F00C4F49D /* Plane.swift */; };
+		DDF024FB2843ED4800C4F49D /* plane_grid.png in Resources */ = {isa = PBXBuildFile; fileRef = DDF024FA2843ED4800C4F49D /* plane_grid.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,8 @@
 		DDF024F1283DCD2900C4F49D /* Doughnut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Doughnut.swift; sourceTree = "<group>"; };
 		DDF024F32840265300C4F49D /* UtilityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityExtensions.swift; sourceTree = "<group>"; };
 		DDF024F52840282400C4F49D /* SCNVector3+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extensions.swift"; sourceTree = "<group>"; };
+		DDF024F72843E82F00C4F49D /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
+		DDF024FA2843ED4800C4F49D /* plane_grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plane_grid.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +91,7 @@
 		DDF024E3283C6B2800C4F49D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				DDF024F92843ED1700C4F49D /* Plane */,
 				DDF024E4283C6BAF00C4F49D /* doughnut.dae */,
 			);
 			path = Models;
@@ -114,8 +119,17 @@
 			isa = PBXGroup;
 			children = (
 				DDF024F1283DCD2900C4F49D /* Doughnut.swift */,
+				DDF024F72843E82F00C4F49D /* Plane.swift */,
 			);
 			path = Objects;
+			sourceTree = "<group>";
+		};
+		DDF024F92843ED1700C4F49D /* Plane */ = {
+			isa = PBXGroup;
+			children = (
+				DDF024FA2843ED4800C4F49D /* plane_grid.png */,
+			);
+			path = Plane;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,6 +193,7 @@
 				DDF024E8283C6C2A00C4F49D /* README.md in Resources */,
 				DDF024DD283C6A4500C4F49D /* LaunchScreen.storyboard in Resources */,
 				DDF024E5283C6BAF00C4F49D /* doughnut.dae in Resources */,
+				DDF024FB2843ED4800C4F49D /* plane_grid.png in Resources */,
 				DDF024DA283C6A4500C4F49D /* Assets.xcassets in Resources */,
 				DDF024EF283DC57100C4F49D /* .gitignore in Resources */,
 				DDF024D8283C6A4400C4F49D /* Main.storyboard in Resources */,
@@ -198,6 +213,7 @@
 				DDF024ED283D75F000C4F49D /* Node+Extensions.swift in Sources */,
 				DDF024D5283C6A4400C4F49D /* ViewController.swift in Sources */,
 				DDF024D1283C6A4400C4F49D /* AppDelegate.swift in Sources */,
+				DDF024F82843E82F00C4F49D /* Plane.swift in Sources */,
 				DDF024F62840282400C4F49D /* SCNVector3+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
