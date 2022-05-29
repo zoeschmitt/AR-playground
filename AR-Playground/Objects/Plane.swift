@@ -14,6 +14,9 @@ class Plane: SCNNode {
     var planeGeometry: SCNPlane
     var planeNode: SCNNode
 
+    var shadowPlaneGeometry: SCNPlane
+    var shadowNode: SCNNode
+
     init(_ anchor: ARPlaneAnchor) {
         // Save the anchor that we belong to
         self.planeAnchor = anchor
@@ -29,7 +32,25 @@ class Plane: SCNNode {
         self.planeNode = SCNNode(geometry: planeGeometry)
         // Position the node. We position the node slightly underneath the origin, so that if we add objects at a Y value of 0 the plane won’t interfere with the visuals of the new object.
         self.planeNode.transform = SCNMatrix4MakeRotation(-Float.pi / 2.0, 1, 0, 0)
+        self.planeNode.castsShadow = false
+
+        self.shadowPlaneGeometry = SCNPlane(width: CGFloat(anchor.extent.x), height: CGFloat(anchor.extent.z))
+        let shadowMaterial = SCNMaterial()
+        shadowMaterial.diffuse.contents = UIColor.white
+        shadowMaterial.lightingModel = .constant
+        shadowMaterial.writesToDepthBuffer = true
+        shadowMaterial.colorBufferWriteMask = []
+        self.shadowPlaneGeometry.materials = [shadowMaterial]
+
+        self.shadowNode = SCNNode(geometry: shadowPlaneGeometry)
+        self.shadowNode.transform = planeNode.transform
+        // we don’t want that plane to be casting its own shadows
+        self.shadowNode.castsShadow = false
+
         super.init()
+
+        self.addChildNode(planeNode)
+        self.addChildNode(shadowNode)
     }
 
     required init?(coder: NSCoder) {
@@ -41,5 +62,9 @@ class Plane: SCNNode {
         self.planeGeometry.width = CGFloat(anchor.extent.x)
         self.planeGeometry.height = CGFloat(anchor.extent.z)
         self.position = SCNVector3Make(anchor.extent.x, -0.002, anchor.center.z)
+    }
+
+    func setPlaneVisibility(_ visible: Bool) {
+        self.planeNode.isHidden = !visible
     }
 }

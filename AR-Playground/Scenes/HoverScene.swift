@@ -35,6 +35,14 @@ struct HoverScene {
         let directionalLight = SCNLight()
         directionalLight.type = .directional
         directionalLight.color = UIColor(white: 0.8, alpha: 1.0)
+
+        directionalLight.castsShadow = true
+        // we set the the shadowMode to deferred rendering, which means the
+        // shadows are drawn to the screen after the objects are.
+        directionalLight.shadowMode = .deferred
+        directionalLight.shadowColor = UIColor.black.withAlphaComponent(0.6)
+        directionalLight.shadowRadius = 5.0
+
         let directionalNode = SCNNode()
         directionalNode.eulerAngles = SCNVector3Make(GLKMathDegreesToRadians(-40), GLKMathDegreesToRadians(0), GLKMathDegreesToRadians(0))
         directionalNode.light = directionalLight
@@ -58,6 +66,39 @@ struct HoverScene {
 
         scene.rootNode.addChildNode(doughnut)
         doughnut.runAction(scaleAction, forKey: "scaleAction")
+    }
+
+    func createTextNode(string: String) -> SCNNode {
+        let text = SCNText(string: string, extrusionDepth: 0.1)
+        // the font size is in scene units (1 meter)
+        text.font = UIFont.systemFont(ofSize: 1.0)
+        // The flatness is the smoothness of the rounded parts of the font.
+        // The subdivision it uses when SceneKit creates line segments to approximate the curve
+        // of a letter. Smaller values means more line segments, which means smoother fonts,
+        // but at a cost of performance.
+        text.flatness = 0.01
+        text.firstMaterial?.diffuse.contents = UIColor.white
+
+        let textNode = SCNNode(geometry: text)
+        textNode.castsShadow = true
+        let fontSize = Float(0.04)
+        textNode.scale = SCNVector3(fontSize, fontSize, fontSize)
+        textNode.castsShadow = true
+
+        // What we do here is take the bounding box of the object,
+        // and set the pivot to be the center of the X and Z axis, and the lowest point of the Y axis.
+        var minVec = SCNVector3Zero
+        var maxVec = SCNVector3Zero
+        (minVec, maxVec) = textNode.boundingBox
+        textNode.pivot = SCNMatrix4MakeTranslation(minVec.x + (maxVec.x - minVec.x) / 2, minVec.y, minVec.z + (maxVec.z - minVec.z) / 2)
+
+        return textNode
+    }
+
+    func addText(string: String, parent: SCNNode) {
+        let textNode = self.createTextNode(string: string)
+        textNode.position = SCNVector3Zero
+        parent.addChildNode(textNode)
     }
 
     func easeOutElastic(_ t: Float) -> Float {

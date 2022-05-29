@@ -16,6 +16,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var didInitializeScene: Bool = false
     /// maps anchors to planes. This gives us an easy way to lookup and modify the corresponding plane.
     var planes = [ARPlaneAnchor: Plane]()
+    var visibleGrid: Bool = true
+    /// haptick feedback
+    let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +37,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
 
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.didTapScreen))
+        tapRecognizer.numberOfTapsRequired = 1
+        tapRecognizer.numberOfTouchesRequired = 1
         self.view.addGestureRecognizer(tapRecognizer)
+
+        let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.didDoubleTapScreen))
+        doubleTapRecognizer.numberOfTapsRequired = 2
+        doubleTapRecognizer.numberOfTouchesRequired = 1
+        self.view.addGestureRecognizer(doubleTapRecognizer)
+
+        feedbackGenerator.prepare()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,7 +54,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
-        // tell ARKit that we want to track planes. 
+        // tell ARKit that we want to track planes.
         configuration.planeDetection = .horizontal
 
         // Run the view's session
@@ -72,6 +84,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         DispatchQueue.main.async {
             if let planeAnchor = anchor as? ARPlaneAnchor {
                 self.addPlane(node: node, anchor: planeAnchor)
+                self.feedbackGenerator.impactOccurred()
             }
         }
     }
@@ -88,8 +101,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func addPlane(node: SCNNode, anchor: ARPlaneAnchor) {
         let plane = Plane(anchor)
         planes[anchor] = plane
+        plane.setPlaneVisibility(self.visibleGrid)
         node.addChildNode(plane)
-        print("added plane")
     }
 
     func updatePlane(anchor: ARPlaneAnchor) {
@@ -102,18 +115,40 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     /// If it is, then we add our animation to it. If we didn’t get any hits from our test, then we do as before, adding a new doughnut in
     /// front of the camera.
     @objc func didTapScreen(recognizer: UITapGestureRecognizer) {
-        if didInitializeScene, let camera = sceneView.session.currentFrame?.camera {
-            let tapLocation = recognizer.location(in: sceneView)
-            let hitTestResults = sceneView.hitTest(tapLocation)
-            if let node = hitTestResults.first?.node, let scene = sceneController.scene, let doughnut = node.topmost(until: scene.rootNode) as? Doughnut {
-                doughnut.animate()
-            } else {
-                var translation = matrix_identity_float4x4
-                translation.columns.3.z = -1.0
-                let transform = camera.transform * translation
-                let position = SCNVector3(transform.columns.3.x, transform.columns.3.y, transform.columns.3.z)
-                sceneController.addDoughnut(position: position)
+        if didInitializeScene {
+            if let camera = sceneView.session.currentFrame?.camera {
+                let tapLocation = recognizer.location(in: sceneView)
+                let hitTestResults = sceneView.hitTest(tapLocation)
+                if let node = hitTestResults.first?.node, let scene = sceneController.scene {
+                    if let doughnut = node.topmost(until: scene.rootNode) as? Doughnut {
+                        doughnut.animate()
+                    } else if let plane = node.parent as? Plane, let planeParent = plane.parent, let hitResult = hitTestResults.first {
+                        let textPos = SCNVector3Make(
+                            hitResult.worldCoordinates.x,
+                            hitResult.worldCoordinates.y,
+                            hitResult.worldCoordinates.z
+                        )
+                        sceneController.addText(string: "Hello", parent: planeParent)
+                    }
+                }
+                else {
+                    var translation = matrix_identity_float4x4
+                    translation.columns.3.z = -1.0
+                    let transform = camera.transform * translation
+                    let position = SCNVector3(transform.columns.3.x, transform.columns.3.y, transform.columns.3.z)
+                    sceneController.addDoughnut(position: position)
+                }
             }
+        }
+    }
+
+    /// when someone double taps the screen. We’ll add a bool to keep track of whether we are in visible or not visible mode on all the found Planes in our ViewController.
+    @objc func didDoubleTapScreen(recognizer: UITapGestureRecognizer) {
+        if didInitializeScene {
+            self.visibleGrid = !self.visibleGrid
+            planes.forEach({ (_, plane) in
+                plane.setPlaneVisibility(self.visibleGrid)
+            })
         }
     }
     
